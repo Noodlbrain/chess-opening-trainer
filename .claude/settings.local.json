@@ -12,7 +12,11 @@
       "Bash(git init *)",
       "Bash(git add *)",
       "Bash(git -c 'user.name=Opening Trainer' -c user.email=osi.wills@gmail.com commit -q -m 'Chess Opening Trainer: 1500-1600 repertoire, Learn + Test modes *)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(gh repo *)",
+      "Bash(python3 -)",
+      "Bash(git -c 'user.name=Opening Trainer' -c user.email=osi.wills@gmail.com commit -q -m 'Use absolute start_url/scope/id + icon paths in manifest for iOS reliability *)",
+      "Bash(git push *)"
     ]
   }
 }

@@ -1,16 +1,17 @@
 {
+  "id": "/chess-opening-trainer/",
   "name": "Chess Opening Trainer",
   "short_name": "Openings",
   "description": "Learn and drill a chess opening repertoire tuned for 1500-1600 rapid.",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/chess-opening-trainer/index.html",
+  "scope": "/chess-opening-trainer/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#1a1c22",
   "theme_color": "#1a1c22",
   "icons": [
-    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/chess-opening-trainer/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/chess-opening-trainer/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/chess-opening-trainer/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
