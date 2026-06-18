@@ -33,7 +33,7 @@ const commentForPly = (chapter, moves, ply) => {
 
 // ============================================================ SRS store
 const SRS_KEY = "chessRepSRS.v1";
-const BOX_DAYS = [0, 1, 3, 7, 16]; // boxes 1..5
+const BOX_DAYS = [1, 2, 4, 8, 16]; // review interval (days) for boxes 1..5
 const DAY = 86400000;
 
 const loadSrs = () => {
@@ -57,7 +57,9 @@ function gradeDrill(id, result) {
   else if (result === "fail") { r.box = 1; r.lapses = (r.lapses || 0) + 1; }
   else r.box = Math.max(r.box || 1, 1); // neutral: keep box, just reschedule
   r.reps = (r.reps || 0) + 1;
-  r.due = Date.now() + BOX_DAYS[r.box - 1] * DAY;
+  // A missed line comes back this same session; passed/hinted lines defer by
+  // the box interval (a clean first pass schedules at least a day out).
+  r.due = result === "fail" ? Date.now() : Date.now() + BOX_DAYS[r.box - 1] * DAY;
   SRS[id] = r;
   saveSrs();
 }

@@ -56,15 +56,15 @@ Each line is a flashcard placed in a Leitner box. Drill intervals:
 
 | Box | Next review |
 |-----|-------------|
-| 1 | today |
-| 2 | 1 day |
-| 3 | 3 days |
-| 4 | 7 days |
+| 1 | 1 day |
+| 2 | 2 days |
+| 3 | 4 days |
+| 4 | 8 days |
 | 5 | 16 days |
 
 - Play a line with **no mistakes** → it moves up a box (longer interval).
-- A **wrong move** or using **Show move** → back to box 1.
-- A **hint** keeps it in place.
+- A **wrong move** or using **Show move** → back to box 1, and it comes back **later in the same session**.
+- A **hint** keeps it in its current box.
 
 ## Adding or editing lines
 
