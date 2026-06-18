@@ -1,0 +1,7 @@
+"Kaneo" chess piece set
+Author: Kadagaden
+Source: https://github.com/Kadagaden/chess-pieces (chess_kaneo)
+License: Creative Commons Attribution 4.0 International (CC-BY-4.0)
+         https://creativecommons.org/licenses/by/4.0/
+Changes: the 12 standard pieces were copied and renamed to lowercase
+         (e.g. wK.svg -> wk.svg) for use in this app.

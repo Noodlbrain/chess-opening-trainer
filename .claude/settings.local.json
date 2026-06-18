@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sL -o lib/chess.js \"https://cdn.jsdelivr.net/npm/chess.js@0.13.4/chess.js\")",
+      "Bash(node validate.mjs)",
+      "Bash(which node *)",
+      "Bash(python3 validate.py)",
+      "mcp__Claude_Preview__preview_start",
+      "WebSearch",
+      "Bash(curl -s \"https://api.github.com/repos/Kadagaden/chess-pieces/git/trees/main?recursive=0\")",
+      "Bash(touch .nojekyll)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git -c 'user.name=Opening Trainer' -c user.email=osi.wills@gmail.com commit -q -m 'Chess Opening Trainer: 1500-1600 repertoire, Learn + Test modes *)"
+    ]
+  }
+}
