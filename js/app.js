@@ -1,7 +1,7 @@
 // Bump ?v= on any JS change to bust the browser's module cache (see index.html).
-import { Chess } from "../lib/chess.js?v=2";
-import { REPERTOIRE } from "./repertoire.js?v=2";
-import { Board } from "./board.js?v=2";
+import { Chess } from "../lib/chess.js?v=3";
+import { REPERTOIRE } from "./repertoire.js?v=3";
+import { Board } from "./board.js?v=3";
 
 // ============================================================ helpers
 const $ = (id) => document.getElementById(id);
