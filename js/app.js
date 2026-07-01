@@ -1,6 +1,7 @@
-import { Chess } from "../lib/chess.js";
-import { REPERTOIRE } from "./repertoire.js";
-import { Board } from "./board.js";
+// Bump ?v= on any JS change to bust the browser's module cache (see index.html).
+import { Chess } from "../lib/chess.js?v=2";
+import { REPERTOIRE } from "./repertoire.js?v=2";
+import { Board } from "./board.js?v=2";
 
 // ============================================================ helpers
 const $ = (id) => document.getElementById(id);
@@ -113,10 +114,34 @@ function initLearnSelectors() {
   fillSelect($("learn-group"), REPERTOIRE.groups, (x, i) => i, (x) => x.title);
   refreshChapterSelect();
 }
+const TIERS = [
+  { n: 1, label: "①  Core — start here" },
+  { n: 2, label: "②  Common replies" },
+  { n: 3, label: "③  Sidelines & surprise weapons" },
+];
 function refreshChapterSelect() {
   const grp = REPERTOIRE.groups[learn.g];
-  fillSelect($("learn-chapter"), grp.chapters, (x, i) => i, (x) => x.title);
-  learn.c = 0;
+  const sel = $("learn-chapter");
+  sel.innerHTML = "";
+  let firstIdx = null;
+  for (const { n, label } of TIERS) {
+    const entries = grp.chapters
+      .map((c, i) => ({ c, i }))
+      .filter((x) => (x.c.tier || 2) === n);
+    if (!entries.length) continue;
+    const og = document.createElement("optgroup");
+    og.label = label;
+    for (const { c, i } of entries) {
+      if (firstIdx === null) firstIdx = i;
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = c.title;
+      og.appendChild(o);
+    }
+    sel.appendChild(og);
+  }
+  learn.c = firstIdx ?? 0;
+  sel.value = String(learn.c);
   refreshLineSelect();
 }
 function refreshLineSelect() {

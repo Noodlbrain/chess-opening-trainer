@@ -192,6 +192,8 @@ select, input[type="text"] {
   cursor: pointer;
 }
 select:focus { outline: 2px solid var(--accent); }
+select optgroup { font-weight: 700; color: var(--accent); background: var(--bg); font-style: normal; }
+select option { color: var(--text); background: var(--bg-elev); font-weight: 400; }
 
 .blurb {
   font-size: 13px; color: var(--muted); margin: 0 0 12px;

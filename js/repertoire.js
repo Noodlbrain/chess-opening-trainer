@@ -24,10 +24,11 @@ export const REPERTOIRE = {
       id: "white",
       title: "White: 1.e4 (Italian Complex)",
       heroColor: "w",
-      blurb: "A complete 1.e4 repertoire built on the slow Italian. Sound, flexible, and light on forced theory — you get rich middlegames where understanding beats memorization.",
+      blurb: "STEP 1 of your studies — start here (you choose 1.e4 in every White game, so this pays off fastest). A complete 1.e4 repertoire built on the slow Italian: sound, flexible, low on forced theory. Learn the chapters top-to-bottom — the ① Core group first, then ② Common replies, then the ③ Sidelines & surprises.",
       chapters: [
         {
           id: "w-italian-main",
+          tier: 1,
           title: "Italian — Giuoco Pianissimo (3...Bc5)",
           intro: "The backbone of your White repertoire. After 3.Bc4 Bc5 we play the 'quiet Italian' with c3 and d3. Plan: complete development (Nbd2, O-O, Re1, Bb3), tuck the king away, then reroute the knight Nb1-d2-f1-g3 and prepare the central break d3-d4 at the right moment. You are never worse and you always understand the position.",
           lines: [
@@ -80,6 +81,7 @@ export const REPERTOIRE = {
         },
         {
           id: "w-two-knights",
+          tier: 1,
           title: "Italian — Two Knights (3...Nf6)",
           intro: "When Black plays 3...Nf6 instead of 3...Bc5, do NOT enter the sharp 4.Ng5 (Fried Liver) tactics — they cut both ways and demand precise memory. Instead play 4.d3, the quiet Italian, and transpose to the same calm structures you already know.",
           lines: [
@@ -132,6 +134,7 @@ export const REPERTOIRE = {
         },
         {
           id: "w-petroff",
+          tier: 3,
           title: "Petroff Defense (2...Nf6)",
           intro: "After 2.Nf3 Nf6 Black counterattacks instead of defending e5. Take the pawn, retreat correctly, and you get an easy game with a small space edge. Know the move-order: after 3.Nxe5 you must answer 3...d6 by retreating, and you must understand why 3...Nxe4 is met by 4.Qe2.",
           lines: [
@@ -186,6 +189,7 @@ export const REPERTOIRE = {
         },
         {
           id: "w-philidor",
+          tier: 3,
           title: "Philidor & ...d6 setups (2...d6)",
           intro: "After 2...d6 Black plays passively. Strike with 3.d4 to seize a large center and a comfortable, lasting space advantage. This is one of the easiest positions to play in the whole repertoire.",
           lines: [
@@ -236,6 +240,7 @@ export const REPERTOIRE = {
         },
         {
           id: "w-alapin",
+          tier: 1,
           title: "Alapin Sicilian (1...c5 2.c3)",
           intro: "Your anti-Sicilian. Instead of memorizing reams of Open Sicilian theory, play 2.c3, preparing d4 with a big center. The plans are natural and you sidestep all of Black's pet lines. Know the two main replies: 2...Nf6 and 2...d5.",
           lines: [
@@ -303,6 +308,7 @@ export const REPERTOIRE = {
         },
         {
           id: "w-wing-gambit",
+          tier: 3,
           title: "Wing Gambit (2.b4) — aggressive anti-Sicilian",
           intro: "An optional, aggressive alternative to your Alapin. 2.b4 offers a pawn to deflect Black's c-pawn away from the center, then you seize the middle with d4/e5 and blast open the a- and b-files for a fast attack. Honest assessment: with precise play (3...d5) Black is objectively fine, so this is a true gambit — but it's rarely seen and dangerous in practice. Most club players either grab pawns greedily (and get mauled) or misplay the unfamiliar positions. A great surprise weapon; keep the Alapin as your solid default.",
           lines: [
@@ -355,6 +361,7 @@ export const REPERTOIRE = {
         },
         {
           id: "w-advance-french",
+          tier: 2,
           title: "Advance French (1...e6)",
           intro: "Against the French, grab space with 3.e5. You get a big pawn chain (d4-e5) and a clear plan: defend the base on d4, expand, and use your space. Black will try to break with ...c5 and ...f6 — your job is to hold the chain and keep the bind.",
           lines: [
@@ -417,6 +424,7 @@ export const REPERTOIRE = {
         },
         {
           id: "w-advance-caro",
+          tier: 2,
           title: "Advance Caro-Kann (1...c6)",
           intro: "Against the Caro-Kann, play the Advance with the Short System: e5, Nf3, Be2, O-O, c3, Nbd2. It's calm, low-theory, and easy to play. The point: develop smoothly, leave the c-pawn flexible, and challenge Black's good bishop on f5 with Nh4 or Bd3 ideas later.",
           lines: [
@@ -469,6 +477,7 @@ export const REPERTOIRE = {
         },
         {
           id: "w-scandinavian",
+          tier: 2,
           title: "Scandinavian (1...d5)",
           intro: "After 1...d5 2.exd5 Qxd5 3.Nc3, you hit the queen with tempo and get a fast, free development. Your plan is simple and effective: d4, Nf3, Bc4/Be2, Bd2 or Be3, then often O-O-O with a lead in development. Black's early queen sortie costs time — punish it by developing quickly.",
           lines: [
@@ -562,6 +571,7 @@ export const REPERTOIRE = {
         },
         {
           id: "w-pirc-modern",
+          tier: 3,
           title: "Pirc / Modern (1...d6 / 1...g6)",
           intro: "Against these hypermodern setups (Black gives you the center, planning to attack it later), build a classical center and develop soundly: e4, d4, Nc3, Nf3, Be2, O-O. Don't overextend — a healthy big center plus calm development gives you a long-term space edge.",
           lines: [
@@ -609,10 +619,11 @@ export const REPERTOIRE = {
       id: "black-e4",
       title: "Black vs 1.e4: Accelerated Dragon",
       heroColor: "b",
-      blurb: "Your main answer is the Accelerated Dragon — a Sicilian with ONE big idea, the ...d5 freeing break in a single move: fianchetto to g7, castle fast, play actively. Plus an optional surprise weapon, the Alekhine Defense (1...Nf6), that provokes White into overextending and collapsing — perfect for catching unprepared opponents.",
+      blurb: "STEP 2 — learn after your White repertoire (1.e4 is your opponents' most common first move). Your main answer is the Accelerated Dragon — a Sicilian with ONE big idea, the ...d5 freeing break: fianchetto to g7, castle fast, play actively. Work top-to-bottom: ① Core (the main line + the anti-Sicilians you'll face most), then ② Common, then the ③ optional surprise weapons (Alekhine, Owen's).",
       chapters: [
         {
           id: "b-accel-main",
+          tier: 1,
           title: "Accelerated Dragon — Main Line (5.Nc3)",
           intro: "The core. After 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 g6, you put the bishop on g7 and castle. The dream is the ...d5 break (equalizing in one move, the whole point of the 'Accelerated' move-order). When White plays the natural 6.Be3/7.Bc4 setup, you castle and prepare ...d6, ...Bd7, ...Rc8 with queenside play.",
           lines: [
@@ -710,6 +721,7 @@ export const REPERTOIRE = {
         },
         {
           id: "b-maroczy",
+          tier: 2,
           title: "Maroczy Bind (5.c4)",
           intro: "The critical test: White plays c4 to clamp down on the ...d5 break, gaining a big space bind. Don't panic — the Bind is well-understood. Your plan: trade a pair of knights with ...Nxd4, develop the bishop to d7/c6, and slowly pressure the bind with ...a5 (grabbing the c5 square), ...Nd7-c5, and eventually a ...b5 or ...f5 break. Patience and good squares.",
           lines: [
@@ -763,6 +775,7 @@ export const REPERTOIRE = {
         },
         {
           id: "b-rossolimo",
+          tier: 1,
           title: "Rossolimo (3.Bb5)",
           intro: "A very common anti-Sicilian at club level: 3.Bb5 pins/trades your knight. Answer 3...g6 (staying true to your fianchetto plan). After Bxc6 dxc6 you get the bishop pair and a rock-solid structure; the doubled c-pawns control key central squares (d5/b5). Plan: ...Bg7, ...Nf6, ...O-O, then ...e5 or ...Nd7 with a comfortable, no-risk game.",
           lines: [
@@ -820,6 +833,7 @@ export const REPERTOIRE = {
         },
         {
           id: "b-alapin-black",
+          tier: 1,
           title: "vs Alapin (2.c3)",
           intro: "When White plays 2.c3 (preparing d4 with a big center, and stopping your Open Sicilian), hit back with 2...Nf6 attacking e4. This forces White's hand and gives you active, easy development against the isolated d-pawn that often results.",
           lines: [
@@ -860,6 +874,7 @@ export const REPERTOIRE = {
         },
         {
           id: "b-closed-gp",
+          tier: 2,
           title: "Closed Sicilian & Grand Prix",
           intro: "Two more anti-Sicilians to know. The Closed (2.Nc3, g3) is slow — mirror White with your own fianchetto and expand on the queenside with ...Rb8/...b5. The Grand Prix (f4 + Bc4) wants a quick kingside attack — neutralize it by putting your bishop on g7 and playing ...e6 to blunt the c4 bishop and prepare ...d5. (For the Smith-Morra and Wing gambits, see the next chapter.)",
           lines: [
@@ -895,6 +910,7 @@ export const REPERTOIRE = {
         },
         {
           id: "b-anti-gambits",
+          tier: 2,
           title: "Smith-Morra, Wing & gambits",
           intro: "Two pawn-gambit anti-Sicilians you'll meet at club level. Smith-Morra (2.d4 cxd4 3.c3): the simplest reply is to DECLINE with 3...Nf6, transposing to a comfortable Alapin-type game and denying White the open lines he craves — but if you accept, know the Siberian Trap, a famous queen-winning shot. Wing Gambit (2.b4): refute it by striking the center with ...d5 rather than clinging to the extra pawn.",
           lines: [
@@ -952,6 +968,7 @@ export const REPERTOIRE = {
         },
         {
           id: "b-alekhine",
+          tier: 3,
           title: "Alekhine Defense (1...Nf6) — surprise weapon",
           intro: "An optional second weapon vs 1.e4 that punishes unfamiliarity. 1...Nf6 invites White to chase your knight by pushing pawns (e5, d4, c4, even f4). Club players LOVE to grab that space — but the big pawn center is overextended and becomes a target. Your whole plan: provoke the pawns forward, then attack them with ...dxe5, ...c5, ...Nc6, ...Bf5/...Bg4 and ...f6, often winning material when White keeps pushing. Unfamiliar territory for most 1500-1600 opponents — exactly where they go wrong.",
           lines: [
@@ -1045,6 +1062,7 @@ export const REPERTOIRE = {
         },
         {
           id: "b-owen",
+          tier: 3,
           title: "Owen's Defense (1...b6)",
           intro: "Another offbeat surprise weapon. 1...b6 fianchettoes the bishop to b7, immediately eyeing e4 and the long light diagonal. You aim for a solid French/hedgehog-style structure — but with a GOOD light-squared bishop (outside the pawn chain), unlike the French. It's unfamiliar to most club players. One warning: resist the tempting 3.Bd3 f5?! gambit — it looks aggressive but is actually bad (White gets a crushing attack after 4.exf5 Bxg2 5.Qh5+). Play solidly instead.",
           lines: [
@@ -1092,10 +1110,11 @@ export const REPERTOIRE = {
       id: "black-d4",
       title: "Black vs 1.d4: Nimzo / Bogo-Indian",
       heroColor: "b",
-      blurb: "A respected, strategically rich answer to 1.d4. The Nimzo (3...Bb4) pins and often doubles White's pawns, fighting for the light squares. When White avoids 3.Nc3, the Bogo (3...Bb4+) gives a solid, easy companion system. Structures over memorization.",
+      blurb: "STEP 3 — learn last. A respected, strategically rich answer to 1.d4: the Nimzo (3...Bb4) pins and doubles White's pawns; when White avoids 3.Nc3, the Bogo (3...Bb4+) is the easy companion. Work top-to-bottom: ① Core (the main Nimzos, the Bogo move-order, and the London/systems you'll face constantly), then ② Common, then the ③ sideline.",
       chapters: [
         {
           id: "d-nimzo-rubinstein",
+          tier: 1,
           title: "Nimzo — Rubinstein (4.e3)",
           intro: "The most common Nimzo at every level. After 4.e3 you castle and strike the center with ...d5 and ...c5. The typical structures are the isolated queen's pawn (IQP) and hanging pawns — you play against them with ...b6, ...Bb7, ...Nc6, and pressure down the c- and d-files. Learn the plans, not 20 moves of theory.",
           lines: [
@@ -1139,6 +1158,7 @@ export const REPERTOIRE = {
         },
         {
           id: "d-nimzo-classical",
+          tier: 1,
           title: "Nimzo — Classical (4.Qc2)",
           intro: "White's most principled try: 4.Qc2 avoids the doubled pawns and bids for the bishop pair. You trade on c3, then immediately target the c4 pawn and the long light diagonal with ...d5, ...dxc4, ...b6 and ...Ba6. White gets the two bishops; you get a rock-solid structure and concrete pressure.",
           lines: [
@@ -1180,6 +1200,7 @@ export const REPERTOIRE = {
         },
         {
           id: "d-nimzo-saemisch",
+          tier: 2,
           title: "Nimzo — Sämisch (4.a3)",
           intro: "White immediately forces ...Bxc3 and bxc3, accepting doubled c-pawns to build a big center with f3/e4. Your strategy is classic Nimzo: blockade and besiege those doubled pawns. Play ...c5, ...Nc6, ...b6, ...Ba6 hammering c4, and ...Na5 — the c4 pawn is chronically weak. If you blunt his center, you're just better structurally.",
           lines: [
@@ -1205,6 +1226,7 @@ export const REPERTOIRE = {
         },
         {
           id: "d-nimzo-f3",
+          tier: 3,
           title: "Nimzo — 4.f3 & sidelines",
           intro: "The remaining 4th moves. 4.f3 (a huge e4 center) — strike with ...d5 before it arrives. 4.Nf3 (a very common move-order) — fianchetto with ...b6/...Bb7 and fight for e4. 4.Bg5 — play ...h6 and ...c5. 4.Bd2 (quiet) — just develop with ...O-O and ...d5. The recurring theme: don't let White's center stabilize — hit it with ...d5 or ...c5 while he's slow.",
           lines: [
@@ -1268,6 +1290,7 @@ export const REPERTOIRE = {
         },
         {
           id: "d-bogo",
+          tier: 1,
           title: "Bogo-Indian (3.Nf3 Bb4+)",
           intro: "When White plays 3.Nf3 (avoiding 3.Nc3 and your Nimzo), check with 3...Bb4+. It's solid, low-theory, and leads to sound positions. The standard plan after 4.Bd2 Qe7 is to trade the dark bishops and play the freeing ...e5 break. Easy to learn and very safe — your perfect Nimzo companion.",
           lines: [
@@ -1322,6 +1345,7 @@ export const REPERTOIRE = {
         },
         {
           id: "d-catalan",
+          tier: 2,
           title: "vs Catalan / 3.g3",
           intro: "If White fianchettos with 3.g3 (the Catalan), the most reliable club answer is to grab the c4 pawn and hold it with the ...a6 system: ...d5, ...dxc4, ...a6, then ...b5 and ...Bb7. White gets pressure on the long diagonal; you get an extra pawn and a solid structure. If you'd rather keep it simple, ...Bb4+ also transposes to Bogo-like play.",
           lines: [
@@ -1367,6 +1391,7 @@ export const REPERTOIRE = {
         },
         {
           id: "d-anti-d4",
+          tier: 1,
           title: "London / Trompowsky & other systems",
           intro: "Not everyone plays 2.c4. Against system openings stay principled. London (2.Bf4) and Jobava London (2.Nc3 + 3.Bf4): challenge the dark-squared bishop with ...Bd6 and strike with ...c5. Trompowsky (2.Bg5) and Torre (2.Nf3/3.Bg5): play ...h6 to question the bishop, then develop. Against Colle/Veresov, just develop soundly with ...d5, ...e6, ...c5, ...Bd6/...Be7 — these systems pose no theoretical problems.",
           lines: [

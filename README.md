@@ -24,6 +24,25 @@ python3 -m http.server 8123
 Your progress (which lines you've learned and when each is next due) is saved in
 your browser's `localStorage`, so use the same browser to keep your history.
 
+## Suggested learning order
+
+The repertoire is organized into a clear study path. In **Learn** mode, the
+Opening dropdown groups each repertoire's chapters into three tiers — work
+top-to-bottom:
+
+- **① Core — start here:** the lines you'll face in most games. Learn these cold.
+- **② Common replies:** frequent but secondary; learn once the Core is solid.
+- **③ Sidelines & surprise weapons:** rare lines and optional aggressive extras.
+
+And across the three repertoires:
+
+1. **Step 1 — White (1.e4).** You choose this every White game, so it pays off
+   fastest.
+2. **Step 2 — Black vs 1.e4** (Accelerated Dragon + surprises).
+3. **Step 3 — Black vs 1.d4** (Nimzo / Bogo-Indian).
+
+Within each chapter, learn the first line (the main line) before its branches.
+
 ## The repertoire
 
 Chosen to minimize rote memorization and maximize understanding of plans and
