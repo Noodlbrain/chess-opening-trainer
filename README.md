@@ -32,6 +32,10 @@ so the home-screen version keeps working without a connection.
 
 ## Handy features
 
+- **The Learn board is live** — instead of pressing ▶ you can physically play
+  the next move of the line (either side's) to step forward; a wrong move
+  shakes the board. Moving the pieces yourself is far stickier for memory
+  than watching them move.
 - **🎯 Drill this line** (Learn mode) jumps straight into testing the line
   you're currently viewing.
 - **Scope** in Test mode can target everything, one repertoire, or a single

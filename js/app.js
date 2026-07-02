@@ -1,7 +1,7 @@
 // Bump ?v= on any JS change (here + index.html) and VERSION in sw.js to bust caches.
-import { Chess } from "../lib/chess.js?v=4";
-import { REPERTOIRE } from "./repertoire.js?v=4";
-import { Board } from "./board.js?v=4";
+import { Chess } from "../lib/chess.js?v=5";
+import { REPERTOIRE } from "./repertoire.js?v=5";
+import { Board } from "./board.js?v=5";
 
 // ============================================================ helpers
 const $ = (id) => document.getElementById(id);
@@ -100,7 +100,7 @@ const shuffle = (a) => {
 let board;
 
 // ============================================================ LEARN mode
-const learn = { g: 0, c: 0, l: 0, ply: 0, game: new Chess(), autoTimer: null };
+const learn = { g: 0, c: 0, l: 0, ply: 0, game: new Chess(), autoTimer: null, last: null };
 
 function fillSelect(sel, items, value = (x, i) => i, label = (x) => x) {
   sel.innerHTML = "";
@@ -181,10 +181,11 @@ function renderLearn() {
   const moves = line.moves;
   const { game, last } = rebuildGame(moves, learn.ply);
   learn.game = game;
+  learn.last = last;
 
-  board.setInteractive(false);
   board.setOrientation(ch.heroColor);
   board.setPosition(game, last);
+  board.setInteractive(learn.ply < moves.length); // play the next move to step forward
 
   $("learn-blurb").textContent = REPERTOIRE.groups[learn.g].blurb;
   $("learn-intro").textContent = ch.intro;
@@ -208,7 +209,7 @@ function renderLearn() {
 
   // comment
   const comment = learn.ply === 0
-    ? "Starting position. Step forward to walk the line — read the idea behind every move."
+    ? "Starting position. Play the moves on the board (or press ▶) to walk the line — read the idea behind every move."
     : commentForPly(ch, moves, learn.ply);
   $("learn-comment").textContent = comment || "(transposes — see the main line for the idea)";
 
@@ -216,13 +217,32 @@ function renderLearn() {
   const toMove = learn.ply % 2 === 0 ? "w" : "b";
   $("board-turn").innerHTML = learn.ply >= moves.length
     ? "<b>End of line</b>"
-    : `<b>${colorName(toMove)}</b> to move`;
+    : `<b>${colorName(toMove)}</b> to move — play it or press ▶`;
 
   // nav availability
   $("btn-first").disabled = learn.ply === 0;
   $("btn-prev").disabled = learn.ply === 0;
   $("btn-next").disabled = learn.ply >= moves.length;
   $("btn-last").disabled = learn.ply >= moves.length;
+}
+
+// In Learn mode the board is live: playing the next move of the line (either
+// side's) steps forward exactly like pressing ▶. Anything else gets a shake —
+// the move list above already shows the answer.
+function learnUserMove(from, to) {
+  const moves = currentLearnLine().moves;
+  if (learn.ply >= moves.length) return;
+  const m = learn.game.move({ from, to, promotion: "q" });
+  if (!m) return;
+  if (norm(m.san) === norm(moves[learn.ply].san)) {
+    stopAuto();
+    learn.ply++;
+    renderLearn();
+  } else {
+    learn.game.undo();
+    board.shake();
+    board.setPosition(learn.game, learn.last);
+  }
 }
 
 function stepLearn(d) {
@@ -658,8 +678,13 @@ function importProgress(file) {
 }
 
 // ============================================================ init
+function routeUserMove(from, to) {
+  if ($("learn-panel").classList.contains("hidden")) onUserMove(from, to);
+  else learnUserMove(from, to);
+}
+
 function init() {
-  board = new Board($("board"), { orientation: "w", onMove: onUserMove });
+  board = new Board($("board"), { orientation: "w", onMove: routeUserMove });
 
   initLearnSelectors();
   initTestSetup();
