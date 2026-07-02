@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png" />
 
-  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/style.css?v=4" />
 </head>
 <body>
   <header class="topbar">
@@ -69,12 +69,14 @@
       </div>
 
       <div class="nav-buttons">
-        <button id="btn-first" title="Start">⏮</button>
-        <button id="btn-prev" title="Back">◀</button>
-        <button id="btn-auto" title="Auto-play">▶ Auto</button>
-        <button id="btn-next" title="Forward">▶</button>
-        <button id="btn-last" title="End">⏭</button>
+        <button id="btn-first" title="Start" aria-label="Go to start">⏮</button>
+        <button id="btn-prev" title="Back" aria-label="Previous move">◀</button>
+        <button id="btn-auto" title="Auto-play" aria-label="Auto-play">▶ Auto</button>
+        <button id="btn-next" title="Forward" aria-label="Next move">▶</button>
+        <button id="btn-last" title="End" aria-label="Go to end">⏭</button>
       </div>
+
+      <button id="btn-drill-line" class="primary-btn">🎯 Drill this line</button>
     </section>
 
     <!-- ===================== TEST ===================== -->
@@ -87,10 +89,19 @@
         </label>
         <label class="check">
           <input type="checkbox" id="test-dueonly" checked />
-          Only lines due for review
+          Due lines + up to 10 new
         </label>
         <div id="test-counts" class="counts"></div>
         <button id="btn-test-start" class="primary-btn">Start drilling</button>
+        <div class="io-row">
+          <button id="btn-export" class="ghost-btn">⬇ Export progress</button>
+          <button id="btn-import" class="ghost-btn">⬆ Import progress</button>
+          <input type="file" id="import-file" accept=".json,application/json" hidden />
+        </div>
+        <details class="progress-details">
+          <summary>📊 Progress by chapter</summary>
+          <div id="progress-table"></div>
+        </details>
       </div>
 
       <div id="test-active" class="hidden">
@@ -103,6 +114,7 @@
           <button id="btn-reveal" class="ghost-btn">👁 Show move</button>
           <button id="btn-skip" class="ghost-btn">↷ Skip line</button>
         </div>
+        <p class="kbd-hint muted">Keys: <b>H</b> hint · <b>S</b> show move · <b>Enter</b> next line</p>
         <button id="btn-next-drill" class="primary-btn hidden">Next line ▶</button>
         <button id="btn-test-quit" class="link-btn">End session</button>
       </div>
@@ -116,6 +128,6 @@
     </section>
   </main>
 
-  <script type="module" src="js/app.js?v=3"></script>
+  <script type="module" src="js/app.js?v=4"></script>
 </body>
 </html>

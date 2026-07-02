@@ -23,6 +23,25 @@ python3 -m http.server 8123
 
 Your progress (which lines you've learned and when each is next due) is saved in
 your browser's `localStorage`, so use the same browser to keep your history.
+Note that localhost and the hosted site keep **separate** stores — use
+**Export / Import progress** (Test setup screen) to back up or move your
+history between browsers or devices.
+
+Once loaded, the app works **offline** (a service worker caches everything),
+so the home-screen version keeps working without a connection.
+
+## Handy features
+
+- **🎯 Drill this line** (Learn mode) jumps straight into testing the line
+  you're currently viewing.
+- **Scope** in Test mode can target everything, one repertoire, or a single
+  chapter.
+- **📊 Progress by chapter** (Test setup screen) shows learned/due/lapses per
+  chapter so you can see where the weak spots are.
+- **Keyboard:** ←/→ step through moves in Learn mode; in Test mode **H** =
+  hint, **S** = show move, **Enter** = next line.
+- Wrong-move feedback recognizes when you played your repertoire move from a
+  *different* line of the same chapter, and names it.
 
 ## Suggested learning order
 
@@ -82,8 +101,13 @@ Each line is a flashcard placed in a Leitner box. Drill intervals:
 | 5 | 16 days |
 
 - Play a line with **no mistakes** → it moves up a box (longer interval).
-- A **wrong move** or using **Show move** → back to box 1, and it comes back **later in the same session**.
+- A **wrong move** or using **Show move** → back to box 1, and the line is
+  re-queued a few drills later **in the same session**; play the retry cleanly
+  and it's scheduled for tomorrow.
 - A **hint** keeps it in its current box.
+
+A due-only session pulls in every due line plus up to **10 new** (never-drilled)
+lines, so a long backlog never becomes an overwhelming wall.
 
 ## Adding or editing lines
 
@@ -99,6 +123,10 @@ python3 -m pip install --user python-chess   # one-time
 python3 validate.py
 ```
 
+Besides move legality (the only hard failure), the validator warns about
+lines in the same chapter that split on one of *your* moves (fine if
+intentional, suspicious if not) and about your moves that lack a comment.
+
 ## Files
 
 ```
@@ -109,6 +137,7 @@ js/board.js       chessboard rendering + click-to-move
 js/app.js         Learn/Test logic + spaced-repetition scheduler
 lib/chess.js      chess.js (move legality), vendored
 img/pieces-kaneo/ chess piece images
+sw.js             service worker (offline cache)
 validate.py       legality checker for repertoire.js
 start.command     double-click launcher
 ```
