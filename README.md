@@ -84,10 +84,12 @@ pawn structures — the things that actually win games on a 10-minute clock.
 | Caro-Kann (1...c6) | Advance, Short System |
 | Scandinavian (1...d5) | 3.Nc3 with fast development |
 | Pirc / Modern | Classical center (Be2, O-O) |
+| 1...e5 (optional weapon) | Vienna: gambit vs 2...Nf6, Bc4/Qg4 vs 2...Nc6 (the Gotham/Chessly repertoire) |
 
 ### Black vs 1.e4 — Accelerated Dragon
 One core idea: the `...d5` freeing break. Includes the Maroczy Bind, Rossolimo,
-Alapin, Closed Sicilian and Grand Prix.
+Alapin, Closed Sicilian and Grand Prix. Also an anti-Vienna chapter (3...d5!
+vs the gambit, the 3...Nxe4! fork trick vs 3.Bc4) for games opened with 1...e5.
 
 ### Black vs 1.d4 — Nimzo-Indian / Bogo-Indian
 Nimzo (3...Bb4) vs Rubinstein (4.e3), Classical (4.Qc2), Sämisch (4.a3), 4.f3.
