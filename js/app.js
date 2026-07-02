@@ -1,7 +1,7 @@
 // Bump ?v= on any JS change (here + index.html) and VERSION in sw.js to bust caches.
-import { Chess } from "../lib/chess.js?v=5";
-import { REPERTOIRE } from "./repertoire.js?v=5";
-import { Board } from "./board.js?v=5";
+import { Chess } from "../lib/chess.js?v=6";
+import { REPERTOIRE } from "./repertoire.js?v=6";
+import { Board } from "./board.js?v=6";
 
 // ============================================================ helpers
 const $ = (id) => document.getElementById(id);
@@ -287,6 +287,10 @@ function initTestSetup() {
   all.value = "__all";
   all.textContent = "Everything";
   sel.appendChild(all);
+  const custom = document.createElement("option");
+  custom.value = "__custom";
+  custom.textContent = "Custom selection…";
+  sel.appendChild(custom);
   for (const g of REPERTOIRE.groups) {
     const og = document.createElement("optgroup");
     og.label = g.title;
@@ -302,13 +306,15 @@ function initTestSetup() {
     }
     sel.appendChild(og);
   }
+  buildPicker();
   updateTestCounts();
 }
 
 function scopedDrills() {
   const scope = $("test-group").value;
   let drills = allDrills();
-  if (scope.startsWith("g:")) drills = drills.filter((d) => d.groupId === scope.slice(2));
+  if (scope === "__custom") drills = drills.filter((d) => customSel.has(d.id));
+  else if (scope.startsWith("g:")) drills = drills.filter((d) => d.groupId === scope.slice(2));
   else if (scope.startsWith("c:")) {
     const [gid, cid] = scope.slice(2).split("|");
     drills = drills.filter((d) => d.groupId === gid && d.chapterId === cid);
@@ -316,8 +322,114 @@ function scopedDrills() {
   return drills;
 }
 
+// ---------------------------------------------- custom line selection
+const SEL_KEY = "chessRepSel.v1";
+let customSel = new Set();
+try { customSel = new Set(JSON.parse(localStorage.getItem(SEL_KEY)) || []); } catch { /* fresh */ }
+const saveSel = () => localStorage.setItem(SEL_KEY, JSON.stringify([...customSel]));
+
+function buildPicker() {
+  const wrap = $("custom-picker");
+  wrap.innerHTML = "";
+  const span = (cls, text) => {
+    const s = document.createElement("span");
+    s.className = cls;
+    s.textContent = text;
+    return s;
+  };
+  for (const g of REPERTOIRE.groups) {
+    const gDiv = document.createElement("div");
+    gDiv.className = "pick-group";
+    const gHead = document.createElement("label");
+    gHead.className = "pick-group-head";
+    const gCb = document.createElement("input");
+    gCb.type = "checkbox";
+    gCb.dataset.group = g.id;
+    gHead.appendChild(gCb);
+    gHead.appendChild(span("", g.title));
+    gDiv.appendChild(gHead);
+    for (const c of [...g.chapters].sort((a, b) => (a.tier || 2) - (b.tier || 2))) {
+      const det = document.createElement("details");
+      det.className = "pick-chapter";
+      const sum = document.createElement("summary");
+      const cCb = document.createElement("input");
+      cCb.type = "checkbox";
+      cCb.dataset.group = g.id;
+      cCb.dataset.chapter = c.id;
+      cCb.addEventListener("click", (e) => e.stopPropagation()); // don't toggle <details>
+      sum.appendChild(cCb);
+      sum.appendChild(span("pick-title", `${TIER_MARK[(c.tier || 2) - 1]} ${c.title}`));
+      const cnt = span("pick-count", "");
+      cnt.dataset.countFor = `${g.id}|${c.id}`;
+      sum.appendChild(cnt);
+      det.appendChild(sum);
+      for (const line of c.lines) {
+        const row = document.createElement("label");
+        row.className = "pick-line";
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.dataset.id = drillId(g.id, c.id, line.name);
+        cb.dataset.group = g.id;
+        cb.dataset.chapter = c.id;
+        row.appendChild(cb);
+        row.appendChild(span("", line.name));
+        det.appendChild(row);
+      }
+      gDiv.appendChild(det);
+    }
+    wrap.appendChild(gDiv);
+  }
+  wrap.addEventListener("change", onPickerChange);
+  refreshPicker();
+}
+
+function onPickerChange(e) {
+  const cb = e.target;
+  if (cb.type !== "checkbox") return;
+  if (cb.dataset.id) {
+    cb.checked ? customSel.add(cb.dataset.id) : customSel.delete(cb.dataset.id);
+  } else {
+    // group or chapter checkbox toggles every line underneath it
+    const g = REPERTOIRE.groups.find((x) => x.id === cb.dataset.group);
+    const chapters = cb.dataset.chapter ? g.chapters.filter((c) => c.id === cb.dataset.chapter) : g.chapters;
+    for (const c of chapters) for (const line of c.lines) {
+      const id = drillId(g.id, c.id, line.name);
+      cb.checked ? customSel.add(id) : customSel.delete(id);
+    }
+  }
+  saveSel();
+  refreshPicker();
+  updateTestCounts();
+}
+
+function refreshPicker() {
+  document.querySelectorAll("#custom-picker input[data-id]").forEach((cb) => {
+    cb.checked = customSel.has(cb.dataset.id);
+  });
+  for (const g of REPERTOIRE.groups) {
+    let gSel = 0, gTot = 0;
+    for (const c of g.chapters) {
+      const ids = c.lines.map((l) => drillId(g.id, c.id, l.name));
+      const sel = ids.filter((id) => customSel.has(id)).length;
+      gSel += sel;
+      gTot += ids.length;
+      const cCb = document.querySelector(
+        `#custom-picker input[data-group="${g.id}"][data-chapter="${c.id}"]:not([data-id])`);
+      cCb.checked = sel === ids.length;
+      cCb.indeterminate = sel > 0 && sel < ids.length;
+      const cnt = document.querySelector(`#custom-picker [data-count-for="${g.id}|${c.id}"]`);
+      cnt.textContent = sel ? `${sel}/${ids.length}` : "";
+    }
+    const gCb = document.querySelector(
+      `#custom-picker input[data-group="${g.id}"]:not([data-chapter])`);
+    gCb.checked = gSel === gTot;
+    gCb.indeterminate = gSel > 0 && gSel < gTot;
+  }
+}
+
 function updateTestCounts() {
   const drills = scopedDrills();
+  $("btn-test-start").disabled = drills.length === 0;
   const due = drills.filter((d) => isDue(d.id)).length;
   const fresh = drills.filter((d) => isNew(d.id)).length;
   const learned = drills.filter((d) => (getRec(d.id).box || 0) >= 3).length;
@@ -355,7 +467,9 @@ function renderProgress() {
 
 function startTest() {
   let drills = scopedDrills();
-  if ($("test-dueonly").checked) {
+  if (!drills.length) return;
+  // a custom selection is drilled exactly as picked; due/new filtering is for the broad scopes
+  if ($("test-group").value !== "__custom" && $("test-dueonly").checked) {
     const due = drills.filter((d) => isDue(d.id));
     const fresh = drills.filter((d) => isNew(d.id)).slice(0, NEW_PER_SESSION);
     const picked = [...due, ...fresh];
@@ -705,7 +819,12 @@ function init() {
   $("tab-learn").addEventListener("click", () => switchTab("learn"));
   $("tab-test").addEventListener("click", () => switchTab("test"));
 
-  $("test-group").addEventListener("change", updateTestCounts);
+  $("test-group").addEventListener("change", () => {
+    const isCustom = $("test-group").value === "__custom";
+    $("custom-picker").classList.toggle("hidden", !isCustom);
+    $("test-dueonly").disabled = isCustom; // custom selections drill exactly what's picked
+    updateTestCounts();
+  });
   $("test-dueonly").addEventListener("change", updateTestCounts);
   $("btn-test-start").addEventListener("click", startTest);
   $("btn-hint").addEventListener("click", doHint);

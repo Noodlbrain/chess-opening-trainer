@@ -38,8 +38,10 @@ so the home-screen version keeps working without a connection.
   than watching them move.
 - **🎯 Drill this line** (Learn mode) jumps straight into testing the line
   you're currently viewing.
-- **Scope** in Test mode can target everything, one repertoire, or a single
-  chapter.
+- **Scope** in Test mode can target everything, one repertoire, a single
+  chapter — or **Custom selection…**, a checklist where you pick any set of
+  lines you want (it persists between sessions and is drilled exactly as
+  picked, ignoring due dates).
 - **📊 Progress by chapter** (Test setup screen) shows learned/due/lapses per
   chapter so you can see where the weak spots are.
 - **Keyboard:** ←/→ step through moves in Learn mode; in Test mode **H** =
