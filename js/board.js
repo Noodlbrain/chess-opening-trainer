@@ -202,7 +202,11 @@ export class Board {
       return;
     }
     d.el.classList.remove("dragging");
-    d.el.style.cssText = "";
+    // reset only the drag positioning — cssText = "" would also erase the
+    // piece image, which lives in this element's inline background-image
+    for (const prop of ["position", "width", "height", "zIndex", "left", "top"]) {
+      d.el.style[prop] = "";
+    }
     if (d.moved) {
       const target = e.type === "pointercancel" ? null : this._squareAt(e.clientX, e.clientY);
       if (target && target !== d.from && this._isLegal(d.from, target)) {
