@@ -1,7 +1,7 @@
 // Bump ?v= on any JS change (here + index.html) and VERSION in sw.js to bust caches.
-import { Chess } from "../lib/chess.js?v=7";
-import { REPERTOIRE } from "./repertoire.js?v=7";
-import { Board } from "./board.js?v=7";
+import { Chess } from "../lib/chess.js?v=8";
+import { REPERTOIRE } from "./repertoire.js?v=8";
+import { Board } from "./board.js?v=8";
 
 // ============================================================ helpers
 const $ = (id) => document.getElementById(id);
@@ -31,6 +31,36 @@ const commentForPly = (chapter, moves, ply) => {
   const path = moves.slice(0, ply).map((m) => m.san).join(" ");
   return chapter.commentByPath.get(path) || moves[ply - 1].c || "";
 };
+
+// ============================================================ sounds
+const SOUND_KEY = "chessRepSound.v1";
+let soundOn = localStorage.getItem(SOUND_KEY) !== "0";
+let audioCtx = null;
+
+function playSound(kind) {
+  if (!soundOn) return;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    const beep = (freq, dur, delay = 0, gain = 0.12, type = "sine") => {
+      const t = audioCtx.currentTime + delay;
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = type;
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(gain, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g).connect(audioCtx.destination);
+      o.start(t);
+      o.stop(t + dur);
+    };
+    if (kind === "move") beep(190, 0.07, 0, 0.15);
+    else if (kind === "capture") { beep(240, 0.05, 0, 0.15); beep(150, 0.08, 0.04, 0.15); }
+    else if (kind === "error") beep(110, 0.2, 0, 0.09, "sawtooth");
+    else if (kind === "done") { beep(523, 0.1, 0, 0.1); beep(784, 0.16, 0.1, 0.1); }
+  } catch { /* audio unavailable — stay silent */ }
+}
+const moveSound = (san) => playSound(san.includes("x") ? "capture" : "move");
 
 // ============================================================ SRS store
 const SRS_KEY = "chessRepSRS.v1";
@@ -237,9 +267,11 @@ function learnUserMove(from, to) {
   if (norm(m.san) === norm(moves[learn.ply].san)) {
     stopAuto();
     learn.ply++;
+    moveSound(m.san);
     renderLearn();
   } else {
     learn.game.undo();
+    playSound("error");
     board.shake();
     board.setPosition(learn.game, learn.last);
   }
@@ -247,7 +279,9 @@ function learnUserMove(from, to) {
 
 function stepLearn(d) {
   const len = currentLearnLine().moves.length;
+  const prev = learn.ply;
   learn.ply = Math.max(0, Math.min(len, learn.ply + d));
+  if (d > 0 && learn.ply > prev) moveSound(currentLearnLine().moves[learn.ply - 1].san);
   renderLearn();
 }
 function stopAuto() {
@@ -264,6 +298,7 @@ function toggleAuto() {
   learn.autoTimer = setInterval(() => {
     if (learn.ply >= currentLearnLine().moves.length) { stopAuto(); return; }
     learn.ply++;
+    moveSound(currentLearnLine().moves[learn.ply - 1].san);
     renderLearn();
   }, 1300);
 }
@@ -529,7 +564,7 @@ async function advanceOpponent() {
     const san = test.drill.moves[test.ply].san;
     const m = test.game.move(san, { sloppy: true });
     test.last = { from: m.from, to: m.to };
-    if (onTestTab()) board.setPosition(test.game, test.last);
+    if (onTestTab()) { board.setPosition(test.game, test.last); moveSound(san); }
     test.ply++;
   }
   if (gen !== test.gen) return;
@@ -548,6 +583,7 @@ function onUserMove(from, to) {
   if (norm(m.san) === norm(expected)) {
     test.last = { from: m.from, to: m.to };
     board.setPosition(test.game, test.last);
+    moveSound(m.san);
     const idea = commentForPly(test.drill.chapter, test.drill.moves, test.ply + 1);
     $("test-feedback").className = "feedback ok";
     $("test-feedback").innerHTML = `✓ <b>${expected}</b> — correct.` +
@@ -558,6 +594,7 @@ function onUserMove(from, to) {
   } else {
     test.game.undo();
     test.wrong++;
+    playSound("error");
     board.shake();
     board.setPosition(test.game, test.last);
     const sibling = siblingLineWith(m.san);
@@ -602,6 +639,7 @@ function doReveal() {
   const m = test.game.move(expected, { sloppy: true });
   test.last = { from: m.from, to: m.to };
   board.setPosition(test.game, test.last);
+  moveSound(m.san);
   const idea = commentForPly(test.drill.chapter, test.drill.moves, test.ply + 1);
   $("test-feedback").className = "feedback";
   $("test-feedback").innerHTML = `👁 The move was <b>${expected}</b>.` +
@@ -626,6 +664,7 @@ function finishDrill() {
   else if (test.drill.retry) { status = "relearn"; result = "relearn"; }
   else { status = "pass"; result = "pass"; }
   gradeDrill(test.drill.id, result);
+  if (status === "pass" || status === "relearn") playSound("done");
   test.results.push({ drill: test.drill, status, wrong: test.wrong });
   if (status === "fail") {
     // a missed line comes back a couple of drills later in this same session
@@ -815,6 +854,23 @@ function init() {
   $("btn-auto").addEventListener("click", toggleAuto);
   $("btn-flip").addEventListener("click", () => board.flip());
   $("btn-drill-line").addEventListener("click", drillCurrentLine);
+
+  const updateSoundBtn = () => { $("btn-sound").textContent = soundOn ? "🔊" : "🔇"; };
+  $("btn-sound").addEventListener("click", () => {
+    soundOn = !soundOn;
+    localStorage.setItem(SOUND_KEY, soundOn ? "1" : "0");
+    updateSoundBtn();
+    if (soundOn) playSound("move"); // audible confirmation (also unlocks audio on iOS)
+  });
+  updateSoundBtn();
+  // browsers only allow audio after a user gesture — unlock on the first tap
+  document.addEventListener("pointerdown", () => {
+    if (!soundOn) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+    } catch { /* no audio */ }
+  }, { capture: true });
 
   $("tab-learn").addEventListener("click", () => switchTab("learn"));
   $("tab-test").addEventListener("click", () => switchTab("test"));

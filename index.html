@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png" />
 
-  <link rel="stylesheet" href="css/style.css?v=7" />
+  <link rel="stylesheet" href="css/style.css?v=8" />
 </head>
 <body>
   <header class="topbar">
@@ -38,7 +38,10 @@
       <div id="board"></div>
       <div class="board-foot">
         <span id="board-turn" class="turn"></span>
-        <button id="btn-flip" class="ghost-btn" title="Flip board">⇅ Flip</button>
+        <div class="foot-btns">
+          <button id="btn-sound" class="ghost-btn" title="Toggle move sounds" aria-label="Toggle move sounds">🔊</button>
+          <button id="btn-flip" class="ghost-btn" title="Flip board">⇅ Flip</button>
+        </div>
       </div>
     </section>
 
@@ -129,6 +132,6 @@
     </section>
   </main>
 
-  <script type="module" src="js/app.js?v=7"></script>
+  <script type="module" src="js/app.js?v=8"></script>
 </body>
 </html>

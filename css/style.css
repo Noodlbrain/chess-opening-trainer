@@ -120,7 +120,13 @@ body {
 }
 .sq.light { background: var(--light-sq); }
 .sq.dark { background: var(--dark-sq); }
-.board.interactive .sq { cursor: pointer; }
+.board.interactive .sq { cursor: pointer; touch-action: none; }
+
+/* drag-and-drop + keyboard play */
+.piece.dragging { filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .5)); }
+.sq.drag-over { box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .65); }
+.board:focus { outline: 2px solid var(--accent); outline-offset: 3px; }
+.board:focus .sq.cursor { outline: 3px solid var(--accent); outline-offset: -3px; z-index: 3; }
 
 .piece {
   width: 100%;
@@ -166,6 +172,7 @@ body {
   display: flex; align-items: center; justify-content: space-between;
   margin-top: 12px;
 }
+.foot-btns { display: flex; gap: 8px; }
 .turn { font-size: 14px; font-weight: 600; color: var(--muted); }
 .turn b { color: var(--text); }
 

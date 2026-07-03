@@ -44,6 +44,11 @@ so the home-screen version keeps working without a connection.
   picked, ignoring due dates).
 - **📊 Progress by chapter** (Test setup screen) shows learned/due/lapses per
   chapter so you can see where the weak spots are.
+- **Pieces move however you like:** click-click, tap-tap, or drag-and-drop.
+  The board is also fully keyboard-playable — Tab to it, move the cursor with
+  the arrow keys, Enter to pick up and drop.
+- **Move sounds** (with distinct capture / error / line-complete cues) — the
+  🔊 button under the board toggles them.
 - **Keyboard:** ←/→ step through moves in Learn mode; in Test mode **H** =
   hint, **S** = show move, **Enter** = next line.
 - Wrong-move feedback recognizes when you played your repertoire move from a
