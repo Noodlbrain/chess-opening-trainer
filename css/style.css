@@ -368,7 +368,7 @@ label.check input { width: auto; margin: 0; cursor: pointer; }
 .group-label { font-size: 12px; color: var(--muted); font-weight: 600; }
 .group-picker {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 8px;
   margin-top: 5px;
 }
