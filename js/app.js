@@ -1,7 +1,7 @@
 // Bump ?v= on any JS change (here + index.html) and VERSION in sw.js to bust caches.
-import { Chess } from "../lib/chess.js?v=12";
-import { REPERTOIRE } from "./repertoire.js?v=12";
-import { Board } from "./board.js?v=12";
+import { Chess } from "../lib/chess.js?v=13";
+import { REPERTOIRE } from "./repertoire.js?v=13";
+import { Board } from "./board.js?v=13";
 
 // ============================================================ helpers
 const $ = (id) => document.getElementById(id);

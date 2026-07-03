@@ -2,7 +2,7 @@
 // serves everything stale-while-revalidate (cached copy immediately, refresh
 // in the background). Bump VERSION together with the ?v= asset query in
 // index.html / js/app.js on any change.
-const VERSION = "v12";
+const VERSION = "v13";
 const CACHE = `chess-trainer-${VERSION}`;
 
 const PIECES = [];
@@ -11,11 +11,11 @@ for (const c of "wb") for (const t of "pnbrqk") PIECES.push(`img/pieces-kaneo/${
 const PRECACHE = [
   "./",
   "index.html",
-  "css/style.css?v=12",
-  "js/app.js?v=12",
-  "js/board.js?v=12",
-  "js/repertoire.js?v=12",
-  "lib/chess.js?v=12",
+  "css/style.css?v=13",
+  "js/app.js?v=13",
+  "js/board.js?v=13",
+  "js/repertoire.js?v=13",
+  "lib/chess.js?v=13",
   "manifest.webmanifest",
   "img/icon-192.png",
   "img/icon-512.png",
