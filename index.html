@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png" />
 
-  <link rel="stylesheet" href="css/style.css?v=10" />
+  <link rel="stylesheet" href="css/style.css?v=11" />
 </head>
 <body>
   <header class="topbar">
@@ -48,9 +48,8 @@
     <!-- ===================== LEARN ===================== -->
     <section id="learn-panel" class="panel">
       <div class="selectors">
-        <label>Repertoire
-          <select id="learn-group"></select>
-        </label>
+        <div class="group-label">Repertoire</div>
+        <div id="learn-group-picker" class="group-picker" role="tablist" aria-label="Repertoire"></div>
         <label>Opening
           <select id="learn-chapter"></select>
         </label>
@@ -132,6 +131,6 @@
     </section>
   </main>
 
-  <script type="module" src="js/app.js?v=10"></script>
+  <script type="module" src="js/app.js?v=11"></script>
 </body>
 </html>

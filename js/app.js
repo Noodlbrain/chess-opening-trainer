@@ -1,7 +1,7 @@
 // Bump ?v= on any JS change (here + index.html) and VERSION in sw.js to bust caches.
-import { Chess } from "../lib/chess.js?v=10";
-import { REPERTOIRE } from "./repertoire.js?v=10";
-import { Board } from "./board.js?v=10";
+import { Chess } from "../lib/chess.js?v=11";
+import { REPERTOIRE } from "./repertoire.js?v=11";
+import { Board } from "./board.js?v=11";
 
 // ============================================================ helpers
 const $ = (id) => document.getElementById(id);
@@ -142,8 +142,30 @@ function fillSelect(sel, items, value = (x, i) => i, label = (x) => x) {
   });
 }
 
+const pieceMark = (g) => (g.heroColor === "w" ? "♔" : "♚");
+
 function initLearnSelectors() {
-  fillSelect($("learn-group"), REPERTOIRE.groups, (x, i) => i, (x) => x.title);
+  const picker = $("learn-group-picker");
+  picker.innerHTML = "";
+  REPERTOIRE.groups.forEach((g, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "gp-card" + (i === learn.g ? " active" : "");
+    btn.setAttribute("role", "tab");
+    btn.dataset.idx = i;
+    const lines = g.chapters.reduce((n, c) => n + c.lines.length, 0);
+    btn.innerHTML =
+      `<span class="gp-piece ${g.heroColor}">${pieceMark(g)}</span>` +
+      `<span class="gp-text"><span class="gp-name">${g.short || g.title}</span>` +
+      `<span class="gp-sub">${g.sub || ""} · ${lines} lines</span></span>`;
+    btn.addEventListener("click", () => {
+      if (learn.g === i) return;
+      learn.g = i;
+      picker.querySelectorAll(".gp-card").forEach((b) => b.classList.toggle("active", +b.dataset.idx === i));
+      refreshChapterSelect();
+    });
+    picker.appendChild(btn);
+  });
   refreshChapterSelect();
 }
 const TIERS = [
@@ -328,7 +350,7 @@ function initTestSetup() {
   sel.appendChild(custom);
   for (const g of REPERTOIRE.groups) {
     const og = document.createElement("optgroup");
-    og.label = g.title;
+    og.label = `${pieceMark(g)} ${g.title}`;
     const whole = document.createElement("option");
     whole.value = `g:${g.id}`;
     whole.textContent = "All of this repertoire";
@@ -381,7 +403,7 @@ function buildPicker() {
     gCb.type = "checkbox";
     gCb.dataset.group = g.id;
     gHead.appendChild(gCb);
-    gHead.appendChild(span("", g.title));
+    gHead.appendChild(span("", `${pieceMark(g)} ${g.title}`));
     gDiv.appendChild(gHead);
     for (const c of [...g.chapters].sort((a, b) => (a.tier || 2) - (b.tier || 2))) {
       const det = document.createElement("details");
@@ -478,7 +500,7 @@ function updateTestCounts() {
 function renderProgress() {
   let html = "";
   for (const g of REPERTOIRE.groups) {
-    html += `<div class="prog-group">${g.title}</div>`;
+    html += `<div class="prog-group">${pieceMark(g)} ${g.title}</div>`;
     for (const c of [...g.chapters].sort((a, b) => (a.tier || 2) - (b.tier || 2))) {
       let learned = 0, due = 0, lapses = 0;
       for (const line of c.lines) {
@@ -843,7 +865,6 @@ function init() {
   initTestSetup();
   updateStatsBar();
 
-  $("learn-group").addEventListener("change", (e) => { learn.g = +e.target.value; refreshChapterSelect(); });
   $("learn-chapter").addEventListener("change", (e) => { learn.c = +e.target.value; refreshLineSelect(); });
   $("learn-line").addEventListener("change", (e) => { learn.l = +e.target.value; loadLearnLine(); });
 

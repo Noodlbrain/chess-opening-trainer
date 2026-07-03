@@ -364,6 +364,45 @@ label.check input { width: auto; margin: 0; cursor: pointer; }
 .prog-bar { grid-column: 1 / -1; height: 3px; background: var(--bg-elev2); border-radius: 2px; overflow: hidden; }
 .prog-bar span { display: block; height: 100%; background: var(--green); }
 
+/* ---------------- Repertoire group picker ---------------- */
+.group-label { font-size: 12px; color: var(--muted); font-weight: 600; }
+.group-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+  margin-top: 5px;
+}
+.gp-card {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 11px;
+  background: var(--bg-elev);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  transition: border-color .12s, background .12s;
+}
+.gp-card:hover { border-color: var(--accent); }
+.gp-card.active {
+  border-color: var(--accent-strong);
+  background: linear-gradient(180deg, rgba(59,130,246,.18), rgba(59,130,246,.08));
+}
+.gp-piece {
+  flex-shrink: 0;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  font-size: 19px; line-height: 1;
+}
+.gp-piece.w { background: #e9e6dc; color: #23262f; }
+.gp-piece.b { background: #23262f; color: #e8eaf0; border: 1px solid var(--border); }
+.gp-text { display: flex; flex-direction: column; min-width: 0; }
+.gp-name { font-size: 13px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gp-sub { font-size: 10.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gp-card.active .gp-sub { color: #b9cdf2; }
+
 /* ---------------- Custom line picker ---------------- */
 .picker {
   margin-top: 10px; padding: 10px 12px;
